@@ -4,8 +4,8 @@ The bitcoin protocol specifies a set of [messages](https://en.bitcoin.it/wiki/Pr
 To create a message, you can use any of the message constructors, here is a simple example:
 
 ```javascript
-var messages = new Messages();
-var message = messages.Ping();
+const messages = new Messages();
+const message = messages.Ping();
 ```
 
 There are also several convenient helpers for inventory based messages:
@@ -28,13 +28,13 @@ Note: A list of further messages is available below.
 For advanced usage, you can also customize which constructor is used for Block and Transaction messages by passing it as an argument to Messages, for example:
 
 ```javascript
-var messages = new Messages({Block: MyBlock, Transaction: MyTransaction});
+const messages = new Messages({Block: MyBlock, Transaction: MyTransaction});
 ```
 
 And additionally a custom network:
 
 ```javascript
-var messages = new Messages({network: Networks.testnet});
+const messages = new Messages({network: Networks.testnet});
 ```
 
 ## List of Messages
@@ -81,5 +81,5 @@ Then to add the custom message:
 ```javascript
 messages.add('custom', 'Custom', CustomMessage);
 
-var customMessage = messages.Custom('argument');
+const customMessage = messages.Custom('argument');
 ```

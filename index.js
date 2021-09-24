@@ -1,4 +1,4 @@
-// var bsv = require('bsv');
-var p2p = require('./lib');
+// const bsv = require('bsv');
+const p2p = require('./lib');
 
 module.exports = p2p;

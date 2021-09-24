@@ -1,13 +1,12 @@
-'use strict';
 
-var chai = require('chai');
-var should = chai.should();
+const chai = require('chai');
+const should = chai.should();
 
-var assert = require('assert');
-var bsv = require('bsv');
-var Data = require('./data/messages');
-var P2P = require('../');
-var BloomFilter = P2P.BloomFilter;
+const assert = require('assert');
+const bsv = require('bsv');
+const Data = require('./data/messages');
+const P2P = require('../');
+const BloomFilter = P2P.BloomFilter;
 
 function getPayloadBuffer(messageBuffer) {
   return Buffer.from(messageBuffer.slice(48), 'hex');
@@ -15,20 +14,20 @@ function getPayloadBuffer(messageBuffer) {
 
 // convert a hex string to a bytes buffer
 function ParseHex(str) {
-  var result = [];
+  const result = [];
   while (str.length >= 2) {
     result.push(parseInt(str.substring(0, 2), 16));
     str = str.substring(2, str.length);
   }
-  var buf = Buffer.from(result, 16);
+  const buf = Buffer.from(result, 16);
   return buf;
 }
 
 describe('BloomFilter', function() {
 
   it('#fromBuffer and #toBuffer round trip', function() {
-    var testPayloadBuffer = getPayloadBuffer(Data.filterload.message);
-    var filter = new BloomFilter.fromBuffer(testPayloadBuffer);
+    const testPayloadBuffer = getPayloadBuffer(Data.filterload.message);
+    const filter = new BloomFilter.fromBuffer(testPayloadBuffer);
     filter.toBuffer().should.deep.equal(testPayloadBuffer);
   });
 
@@ -36,14 +35,14 @@ describe('BloomFilter', function() {
 
   it('serialize filter with public keys added', function() {
 
-    var privateKey = bsv.PrivateKey.fromWIF('5Kg1gnAjaLfKiwhhPpGS3QfRg2m6awQvaj98JCZBZQ5SuS2F15C');
-    var publicKey = privateKey.toPublicKey();
+    const privateKey = bsv.PrivateKey.fromWIF('5Kg1gnAjaLfKiwhhPpGS3QfRg2m6awQvaj98JCZBZQ5SuS2F15C');
+    const publicKey = privateKey.toPublicKey();
 
-    var filter = BloomFilter.create(2, 0.001, 0, BloomFilter.BLOOM_UPDATE_ALL);
+    const filter = BloomFilter.create(2, 0.001, 0, BloomFilter.BLOOM_UPDATE_ALL);
     filter.insert(publicKey.toBuffer());
     filter.insert(bsv.crypto.Hash.sha256ripemd160(publicKey.toBuffer()));
 
-    var expectedFilter = BloomFilter.fromBuffer(ParseHex('038fc16b080000000000000001'));
+    const expectedFilter = BloomFilter.fromBuffer(ParseHex('038fc16b080000000000000001'));
 
     filter.toBuffer().should.deep.equal(expectedFilter.toBuffer());
 
@@ -51,7 +50,7 @@ describe('BloomFilter', function() {
 
   it('serialize to a buffer', function() {
 
-    var filter = BloomFilter.create(3, 0.01, 0, BloomFilter.BLOOM_UPDATE_ALL);
+    const filter = BloomFilter.create(3, 0.01, 0, BloomFilter.BLOOM_UPDATE_ALL);
 
     filter.insert(ParseHex('99108ad8ed9bb6274d3980bab5a85c048f0950c8'));
     assert(filter.contains(ParseHex('99108ad8ed9bb6274d3980bab5a85c048f0950c8')));
@@ -62,16 +61,16 @@ describe('BloomFilter', function() {
     filter.insert(ParseHex('b9300670b4c5366e95b2699e8b18bc75e5f729c5'));
     assert(filter.contains(ParseHex('b9300670b4c5366e95b2699e8b18bc75e5f729c5')));
 
-    var actual = filter.toBuffer();
-    var expected = Buffer.from('03614e9b050000000000000001', 'hex');
+    const actual = filter.toBuffer();
+    const expected = Buffer.from('03614e9b050000000000000001', 'hex');
 
     actual.should.deep.equal(expected);
   });
 
  it('deserialize a buffer', function() {
 
-   var buffer = Buffer.from('03614e9b050000000000000001', 'hex');
-   var filter = BloomFilter.fromBuffer(buffer);
+   const buffer = Buffer.from('03614e9b050000000000000001', 'hex');
+   const filter = BloomFilter.fromBuffer(buffer);
 
    assert(filter.contains(ParseHex('99108ad8ed9bb6274d3980bab5a85c048f0950c8')));
    assert(!filter.contains(ParseHex('19108ad8ed9bb6274d3980bab5a85c048f0950c8')));
@@ -80,8 +79,8 @@ describe('BloomFilter', function() {
  });
 
  it('#toBuffer and #fromBuffer round trip, with a large filter', function() {
-   var filter = BloomFilter.create(10000, 0.001);
-   var buffer = filter.toBuffer();
+   const filter = BloomFilter.create(10000, 0.001);
+   const buffer = filter.toBuffer();
    new BloomFilter.fromBuffer(buffer).should.deep.equal(filter);
  });
 

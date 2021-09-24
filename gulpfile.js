@@ -1,7 +1,6 @@
-'use strict';
 
-var gulp = require('gulp');
-var bitcoreTasks = require('bitcore-build');
+const gulp = require('gulp');
+const bitcoreTasks = require('bitcore-build');
 
 const p2p = bitcoreTasks('p2p', {skipBrowser: false});
 console.log(p2p)

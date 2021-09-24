@@ -5,10 +5,10 @@ The quickest way to get connected is to run the following:
 
 ```javascript
 
-var Pool = require('bsv-p2p').Pool;
-var Networks = require('bsv-p2p').Networks;
+const Pool = require('bsv-p2p').Pool;
+const Networks = require('bsv-p2p').Networks;
 
-var pool = new Pool({network: Networks.livenet});
+const pool = new Pool({network: Networks.livenet});
 
 // connect to the network
 pool.connect();
@@ -29,7 +29,7 @@ By default, peers will be added via DNS discovery and as peers are announced in 
 
 ```javascript
 
-var pool = new Pool({
+const pool = new Pool({
   network: Networks.livenet, // the network object
   dnsSeed: false, // prevent seeding with DNS discovered known peers upon connecting
   listenAddr: false, // prevent new peers being added from addr messages
@@ -49,7 +49,7 @@ pool.connect();
 It's also possible to listen to incoming socket connections to add peers to the pool. To enable this capability, you can do the following:
 
 ```javascript
-var pool = new Pool({network: Networks.livenet});
+const pool = new Pool({network: Networks.livenet});
 pool.listen();
 ```
 

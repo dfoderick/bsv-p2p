@@ -1,33 +1,32 @@
-'use strict';
 
 /*jshint immed: false */
 
-var should = require('chai').should();
+const should = require('chai').should();
 
-var bsv = require('bsv');
-var P2P = require('../');
-var Inventory = P2P.Inventory;
-var BufferWriter = bsv.encoding.BufferWriter;
-var BufferReader = bsv.encoding.BufferReader;
+const bsv = require('bsv');
+const P2P = require('../');
+const Inventory = P2P.Inventory;
+const BufferWriter = bsv.encoding.BufferWriter;
+const BufferReader = bsv.encoding.BufferReader;
 
 describe('Inventory', function() {
 
-  var hash = Buffer.from('eb951630aba498b9a0d10f72b5ea9e39d5ff04b03dc2231e662f52057f948aa1', 'hex');
-  var hashedStr = Buffer.from(hash, 'hex').reverse().toString('hex');
-  var inventoryBuffer = Buffer.from(
+  const hash = Buffer.from('eb951630aba498b9a0d10f72b5ea9e39d5ff04b03dc2231e662f52057f948aa1', 'hex');
+  const hashedStr = Buffer.from(hash, 'hex').reverse().toString('hex');
+  const inventoryBuffer = Buffer.from(
     '01000000eb951630aba498b9a0d10f72b5ea9e39d5ff04b03dc2231e662f52057f948aa1',
     'hex'
   );
 
   describe('@constructor', function() {
     it('create inventory', function() {
-      var inventory = new Inventory({type: Inventory.TYPE.TX, hash: hash});
+      const inventory = new Inventory({type: Inventory.TYPE.TX, hash: hash});
       should.exist(inventory);
     });
 
     it('error with string hash', function() {
       (function() {
-        var inventory = new Inventory({type: Inventory.TYPE.TX, hash: hashedStr});
+        const inventory = new Inventory({type: Inventory.TYPE.TX, hash: hashedStr});
         should.not.exist(inventory);
       }).should.throw('Unexpected hash');
     });
@@ -36,7 +35,7 @@ describe('Inventory', function() {
 
   describe('#forItem', function() {
     it('handle a string hash (reversed)', function() {
-      var inventory = Inventory.forItem(Inventory.TYPE.TX, hashedStr);
+      const inventory = Inventory.forItem(Inventory.TYPE.TX, hashedStr);
       should.exist(inventory);
       inventory.hash.should.deep.equal(new Buffer(hash, 'hex'));
     });
@@ -45,7 +44,7 @@ describe('Inventory', function() {
 
   describe('#forBlock', function() {
     it('use correct block type', function() {
-      var inventory = Inventory.forBlock(hash);
+      const inventory = Inventory.forBlock(hash);
       should.exist(inventory);
       inventory.type.should.equal(Inventory.TYPE.BLOCK);
     });
@@ -53,7 +52,7 @@ describe('Inventory', function() {
 
   describe('#forFilteredBlock', function() {
     it('use correct filtered block type', function() {
-      var inventory = Inventory.forFilteredBlock(hash);
+      const inventory = Inventory.forFilteredBlock(hash);
       should.exist(inventory);
       inventory.type.should.equal(Inventory.TYPE.FILTERED_BLOCK);
     });
@@ -61,7 +60,7 @@ describe('Inventory', function() {
 
   describe('#forTransaction', function() {
     it('use correct filtered tx type', function() {
-      var inventory = Inventory.forTransaction(hash);
+      const inventory = Inventory.forTransaction(hash);
       should.exist(inventory);
       inventory.type.should.equal(Inventory.TYPE.TX);
     });
@@ -69,16 +68,16 @@ describe('Inventory', function() {
 
   describe('#toBuffer', function() {
     it('serialize correctly', function() {
-      var inventory = Inventory.forTransaction(hash);
-      var buffer = inventory.toBuffer();
+      const inventory = Inventory.forTransaction(hash);
+      const buffer = inventory.toBuffer();
       buffer.should.deep.equal(inventoryBuffer);
     });
   });
 
   describe('#toBufferWriter', function() {
     it('write to a buffer writer', function() {
-      var bw = new BufferWriter();
-      var inventory = Inventory.forTransaction(hash);
+      const bw = new BufferWriter();
+      const inventory = Inventory.forTransaction(hash);
       inventory.toBufferWriter(bw);
       bw.concat().should.deep.equal(inventoryBuffer);
     });
@@ -86,7 +85,7 @@ describe('Inventory', function() {
 
   describe('#fromBuffer', function() {
     it('deserialize a buffer', function() {
-      var inventory = Inventory.fromBuffer(inventoryBuffer);
+      const inventory = Inventory.fromBuffer(inventoryBuffer);
       should.exist(inventory);
       inventory.type.should.equal(Inventory.TYPE.TX);
       inventory.hash.should.deep.equal(hash);
@@ -95,8 +94,8 @@ describe('Inventory', function() {
 
   describe('#fromBufferWriter', function() {
     it('deserialize from a buffer reader', function() {
-      var bw = new BufferReader(inventoryBuffer);
-      var inventory = Inventory.fromBufferReader(bw);
+      const bw = new BufferReader(inventoryBuffer);
+      const inventory = Inventory.fromBufferReader(bw);
       should.exist(inventory);
       inventory.type.should.equal(Inventory.TYPE.TX);
       inventory.hash.should.deep.equal(hash);
