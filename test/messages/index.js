@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 
 const chai = require('chai');
 const should = chai.should();
@@ -8,7 +9,6 @@ const Messages = P2P.Messages;
 const messages = new Messages();
 const bsv = require('bsv');
 const Data = require('../data/messages'); //todo merge with commandData
-const commandData = require('../data/messages.json');
 
 function getPayloadBuffer(messageBuffer) {
   return Buffer.from(messageBuffer.slice(48), 'hex');

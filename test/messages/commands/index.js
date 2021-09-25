@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 
 const should = require('chai').should();
 const expect = require('chai').expect;
@@ -164,7 +165,7 @@ describe('Command Messages', function() {
     });
   });
 
-  describe('Transaction', function() {
+  describe('Transaction 2', function() {
 
     it('should be able to pass a custom Transaction', function(done) {
       const Transaction = function(){};

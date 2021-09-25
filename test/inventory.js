@@ -7,16 +7,18 @@ const bsv = require('bsv');
 const P2P = require('../');
 const Inventory = P2P.Inventory;
 const BufferWriter = bsv.encoding.BufferWriter;
+
 const BufferReader = bsv.encoding.BufferReader;
+
+const hash = Buffer.from('eb951630aba498b9a0d10f72b5ea9e39d5ff04b03dc2231e662f52057f948aa1', 'hex');
+const hashedStr = Buffer.from(hash, 'hex').reverse().toString('hex');
+const inventoryBuffer = Buffer.from(
+  '01000000eb951630aba498b9a0d10f72b5ea9e39d5ff04b03dc2231e662f52057f948aa1',
+  'hex'
+);
 
 describe('Inventory', function() {
 
-  const hash = Buffer.from('eb951630aba498b9a0d10f72b5ea9e39d5ff04b03dc2231e662f52057f948aa1', 'hex');
-  const hashedStr = Buffer.from(hash, 'hex').reverse().toString('hex');
-  const inventoryBuffer = Buffer.from(
-    '01000000eb951630aba498b9a0d10f72b5ea9e39d5ff04b03dc2231e662f52057f948aa1',
-    'hex'
-  );
 
   describe('@constructor', function() {
     it('create inventory', function() {
@@ -37,7 +39,7 @@ describe('Inventory', function() {
     it('handle a string hash (reversed)', function() {
       const inventory = Inventory.forItem(Inventory.TYPE.TX, hashedStr);
       should.exist(inventory);
-      inventory.hash.should.deep.equal(new Buffer(hash, 'hex'));
+      inventory.hash.should.deep.equal(Buffer.from(hash, 'hex'));
     });
 
   });

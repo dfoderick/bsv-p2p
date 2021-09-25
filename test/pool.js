@@ -8,19 +8,14 @@ const expect = chai.expect;
 const bsv = require('bsv');
 const P2P = require('../');
 const Peer = P2P.Peer;
-const MessagesData = require('./data/messages');
-const Messages = P2P.Messages;
-const messages = new Messages();
 const Pool = P2P.Pool;
 const Networks = bsv.Networks;
 
-const dns = require('dns');
 const sinon = require('sinon');
-const net = require('net');
 
-function getPayloadBuffer(messageBuffer) {
-  return Buffer.from(messageBuffer.slice(48), 'hex');
-}
+// function getPayloadBuffer(messageBuffer) {
+//   return Buffer.from(messageBuffer.slice(48), 'hex');
+// }
 
 describe('Pool', function() {
 

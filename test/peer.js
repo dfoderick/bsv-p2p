@@ -1,16 +1,16 @@
 
-const chai = require('chai');
-const Net = require('net');
-const Socks5Client = require('socks5-client');
+// const chai = require('chai');
+// const Net = require('net');
+// const Socks5Client = require('socks5-client');
 
-/* jshint unused: false */
-const should = chai.should();
-const expect = chai.expect;
+// /* jshint unused: false */
+// const should = chai.should();
+// const expect = chai.expect;
 const sinon = require('sinon');
-const fs = require('fs');
+// const fs = require('fs');
 
 const bsv = require('bsv');
-const _ = bsv.deps._;
+// const _ = bsv.deps._;
 const P2P = require('../');
 const Peer = P2P.Peer;
 const EventEmitter = require('events').EventEmitter;
@@ -72,7 +72,6 @@ describe('Peer', function() {
 
   it('create instance', function() {
     const peer = new Peer('localhost');
-    console.log(peer)
     peer.host.should.equal('localhost');
     peer.network.should.equal(Networks.livenet);
     peer.port.should.equal(Networks.livenet.port);
@@ -207,7 +206,6 @@ describe('Peer', function() {
   it('should not send version on version if already sent', function(done) {
     const peer = new Peer({host:'localhost'});
     peer.versionSent = true;
-    const commands = {};
     peer.sendMessage = function(message) {
       message.command.should.not.equal('version');
       done();

@@ -1,23 +1,22 @@
+/* eslint-disable no-unused-vars */
 
 const chai = require('chai');
 
-/* jshint unused: false */
 const should = chai.should();
-const sinon = require('sinon');
 
-const bitcore = require('bitcore-lib-cash');
-const _ = bitcore.deps._;
-const Random = bitcore.crypto.Random;
-const BN = bitcore.crypto.BN;
-const BufferUtil = bitcore.util.buffer;
+const bsv = require('bsv');
+const _ = bsv.deps._;
+const Random = bsv.crypto.Random;
+const BN = bsv.crypto.BN;
+const BufferUtil = bsv.util.buffer;
 const p2p = require('../');
 const Peer = p2p.Peer;
 const Pool = p2p.Pool;
-const Networks = bitcore.Networks;
+const Networks = bsv.Networks;
 const Messages = p2p.Messages;
 const Inventory = p2p.Inventory;
-const Block = bitcore.Block;
-const Transaction = bitcore.Transaction;
+const Block = bsv.Block;
+const Transaction = bsv.Transaction;
 
 // config 
 const network = process.env.NETWORK === 'testnet' ? Networks.testnet : Networks.livenet;
@@ -124,7 +123,7 @@ describe('Integration with ' + network.name + ' bitcoind', function() {
       const type = Inventory.TYPE.TX;
       const inv = [{
         type: type,
-        hash: new Buffer(Random.getRandomBuffer(32)) // needs to be random for repeatability
+        hash: Buffer.from(Random.getRandomBuffer(32)) // needs to be random for repeatability
       }];
       peer.once('getdata', function(message) {
         message.inventory[0].should.deep.equal(inv[0]);
@@ -206,13 +205,13 @@ describe('Integration with ' + network.name + ' bitcoind', function() {
     });
   };
   it('sends block inv and receives getdata', function(cb) {
-    const randomHash = new Buffer(Random.getRandomBuffer(32)); // slow buffer
+    const randomHash = Buffer.from(Random.getRandomBuffer(32)); // slow buffer
     const expected = messages.GetData.forBlock(randomHash);
     const message = messages.Inventory.forBlock(randomHash);
     testInvGetData(expected, message, cb);
   });
   it('sends tx inv and receives getdata', function(cb) {
-    const randomHash = new Buffer(Random.getRandomBuffer(32)); // slow buffer
+    const randomHash = Buffer.from(Random.getRandomBuffer(32)); // slow buffer
     const expected = messages.GetData.forTransaction(randomHash);
     const message = messages.Inventory.forTransaction(randomHash);
     testInvGetData(expected, message, cb);

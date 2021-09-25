@@ -1,7 +1,6 @@
 
 /* jshint unused: false */
 
-const should = require('chai').should();
 const utils = require('../../lib/messages/utils');
 const bsv = require('bsv');
 const BufferReader = bsv.encoding.BufferReader;

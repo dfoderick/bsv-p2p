@@ -1,7 +1,4 @@
 
-const chai = require('chai');
-const should = chai.should();
-
 const assert = require('assert');
 const bsv = require('bsv');
 const Data = require('./data/messages');
@@ -57,7 +54,7 @@ describe('BloomFilter', function() {
     // one bit different in first byte
     assert(!filter.contains(ParseHex('19108ad8ed9bb6274d3980bab5a85c048f0950c8')));
     filter.insert(ParseHex('b5a2c786d9ef4658287ced5914b37a1b4aa32eee'));
-    assert(filter.contains(ParseHex("b5a2c786d9ef4658287ced5914b37a1b4aa32eee")));
+    assert(filter.contains(ParseHex('b5a2c786d9ef4658287ced5914b37a1b4aa32eee')));
     filter.insert(ParseHex('b9300670b4c5366e95b2699e8b18bc75e5f729c5'));
     assert(filter.contains(ParseHex('b9300670b4c5366e95b2699e8b18bc75e5f729c5')));
 
@@ -74,7 +71,7 @@ describe('BloomFilter', function() {
 
    assert(filter.contains(ParseHex('99108ad8ed9bb6274d3980bab5a85c048f0950c8')));
    assert(!filter.contains(ParseHex('19108ad8ed9bb6274d3980bab5a85c048f0950c8')));
-   assert(filter.contains(ParseHex("b5a2c786d9ef4658287ced5914b37a1b4aa32eee")));
+   assert(filter.contains(ParseHex('b5a2c786d9ef4658287ced5914b37a1b4aa32eee')));
    assert(filter.contains(ParseHex('b9300670b4c5366e95b2699e8b18bc75e5f729c5')));
  });
 
