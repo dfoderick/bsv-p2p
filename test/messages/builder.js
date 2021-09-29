@@ -1,9 +1,8 @@
-'use strict';
 
-var should = require('chai').should();
-var P2P = require('../../');
-var builder = P2P.Messages.builder;
-var bsv = require('bsv');
+const should = require('chai').should();
+const P2P = require('../../');
+const builder = P2P.Messages.builder;
+const bsv = require('bsv');
 
 describe('Messages Builder', function() {
 
@@ -11,13 +10,13 @@ describe('Messages Builder', function() {
 
     it('should return commands based on default', function() {
       // instantiate
-      var b = builder();
+      const b = builder();
       should.exist(b);
     });
 
     it('should return commands with customizations', function() {
       // instantiate
-      var b = builder({
+      const b = builder({
         network: bsv.Networks.testnet,
         Block: bsv.Block,
         Transaction: bsv.Transaction
