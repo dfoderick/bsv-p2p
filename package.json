@@ -66,7 +66,7 @@
     "bloom-filter": "^0.2.0",
     "bsv": "^1.5.6",
     "buffer-reverse": "^1.0.1",
-    "buffers": "github:bitpay/node-buffers#v0.1.2-bitpay",
+    "buffers": "github:baryon/node-buffers",
     "eventemitter3": "^4.0.7",
     "socks5-client": "^1.2.8"
   },
